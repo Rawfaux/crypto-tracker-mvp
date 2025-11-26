@@ -1,0 +1,5 @@
+venv/
+__pycache__/
+*.pyc
+# Wir laden die SQLite-DB nicht hoch, da Hosting-Anbieter sie nicht speichern!
+tracker.db

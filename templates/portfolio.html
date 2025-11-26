@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Crypto Tracker</title>
+    <style>
+        body { font-family: sans-serif; margin: 40px; }
+        .success { color: green; }
+        .error { color: red; }
+        table { border-collapse: collapse; width: 100%; margin-top: 20px;}
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+
+        .positive-pl {
+            color: green;
+        }
+        .negative-pl {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>Mein Crypto Portfolio</h1>
+
+    {% if message %}
+        <p class="{{ message_type }}">{{ message }}</p>
+    {% endif %}
+
+    <h2>Portfolio Übersicht</h2>
+    
+    <p>Gesamt investiert: <strong>${{ '{:,.2f}'.format(total_invested) }}</strong></p>
+    <p>Aktueller Gesamtwert: <strong>${{ '{:,.2f}'.format(total_current_value) }}</strong></p>
+    <p>Gesamtgewinn/Verlust: <strong>${{ '{:,.2f}'.format(total_p_l) }}</strong></p>
+
+    <hr>
+    
+    <h2>Transaktionen</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Coin</th>
+                <th>Datum</th> <th>Menge</th>
+                <th>Kaufpreis (Stück)</th>
+                <th>Aktueller Wert</th>
+                <th>Gewinn/Verlust</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for tx in transactions %}
+            <tr>
+                <td>{{ tx.symbol }}</td>
+                <td>{{ tx.date_bought.strftime('%Y-%m-%d') }}</td> <td>{{ tx.amount }}</td>
+                <td>${{ '{:,.2f}'.format(tx.price_usd) }}</td>
+                <td><strong>${{ '{:,.2f}'.format(tx.current_value) }}</strong></td>
+                <td style="color: {% if tx.profit_loss < 0 %}red{% else %}green{% endif %};">
+                    ${{ '{:,.2f}'.format(tx.profit_loss) }}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    
+    <hr>
+
+    <h2>Neue Transaktion hinzufügen</h2>
+    <form method="POST" action="{{ url_for('tracker.add_transaction') }}">
+        <label for="symbol">Coin Symbol (z.B. BTC):</label><br>
+        <input type="text" id="symbol" name="symbol" required><br><br>
+        
+        <label for="amount">Gekaufte Menge (z.B. 0.1):</label><br>
+        <input type="number" step="any" id="amount" name="amount" required><br><br>
+        
+        <label for="price_usd">Kaufpreis (USD pro Stück, z.B. 60000):</label><br>
+        <input type="number" step="any" id="price_usd" name="price_usd" required><br><br>
+        
+        <label for="date_bought">Kaufdatum:</label><br>
+        <input type="date" id="date_bought" name="date_bought" required><br><br>
+        
+        <input type="submit" value="Transaktion speichern">
+        
+    </form>
+
+</body>
+</html>
