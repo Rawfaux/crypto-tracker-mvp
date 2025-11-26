@@ -2,9 +2,9 @@ from flask import Flask
 import os
 from datetime import datetime
 # NEU: Verwende relative Imports
-from .models import db, Transaction 
-from .routes import tracker_blueprint 
-from .config import COIN_MAPPING
+from models import db, Transaction 
+from routes import tracker_blueprint 
+from config import COIN_MAPPING
 
 
 def create_app():
