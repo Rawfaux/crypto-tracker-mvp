@@ -1,6 +1,6 @@
 # init_db.py
-from app import create_app
-from models import db, Transaction
+from .app import create_app
+from .models import db, Transaction
 from datetime import datetime
 
 # App erstellen und Kontext aktivieren
