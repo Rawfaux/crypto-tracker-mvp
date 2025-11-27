@@ -1,8 +1,8 @@
 from flask import render_template, request, redirect, url_for, Blueprint
 import requests
 from datetime import datetime
-from .models import db, Transaction  # Der Punkt bedeutet: aus dem aktuellen Ordner (crypto_tracker)
-from .config import COIN_MAPPING, API_URL # Wird im nächsten Schritt benötigt
+from models import db, Transaction  # Der Punkt bedeutet: aus dem aktuellen Ordner (crypto_tracker)
+from config import COIN_MAPPING, API_URL # Wird im nächsten Schritt benötigt
 
 # Erstelle einen "Bauplan" für unsere Routen
 # Dadurch weiß Flask, dass diese Routen zur Hauptanwendung gehören
