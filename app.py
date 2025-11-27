@@ -23,11 +23,13 @@ def create_app():
     app.register_blueprint(tracker_blueprint) 
     
     return app
-
+    
+# 1. Erstelle die App-Instanz auf der obersten Ebene, damit Gunicorn sie findet.
+# Gunicorn ruft 'app' auf und erhält das fertige Flask-Objekt.
+app = create_app()
 
 # Dies ist der Standardstartpunkt
 if __name__ == '__main__':
-    app = create_app()
     app.run(debug=True)
     
     # Dieser Block muss vor dem ersten App-Start ausgeführt werden
